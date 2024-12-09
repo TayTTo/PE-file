@@ -1,5 +1,5 @@
 # Pefile Injection.
-
+**P/s: The notepad++ sample is notepad++ 32 bit, program in this repo will not manipulate 64bit app**
 ## Pefile parser (In the folder Parser).
 This file will extract all the fields in the PE header of a PE file.
 Run tool using : `peparser.exe filepath`.
