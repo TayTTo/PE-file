@@ -32,5 +32,9 @@ Message box when open peparser.exe
 - Run command `infected.exe fileName`
 This program will inject a messageBox to a PEfile and after quit the messageBox, the infected pe file will run normally.
 
-
+## ProcessHollowing.
+Navigate to processhol dir, run file run.bat to compile the file.
+the msgbox is undered msgbox dir, also run.bat to compile.
+- Don't know for some reason, when I let the file process hollowing run, it will let the msgbox.exe file sleep right away, it will start run when I restart the process using taskmanager of ProcessHacker.
+![](./images/pic10.png)
 
