@@ -42,3 +42,5 @@ the msgbox is undered msgbox dir, also run.bat to compile.
 Navigate to dir C2, run 2 bat file to compile server and client program, the put the client program into a Vm and try run the server first, then the client. The client for Linux is in the repo C2/clientOnLinux.
 > Result:
 > ![](./images/pic11.png)
+As result, the server can connect to 2 client at the same time and send command to them.
+Clip demo: https://drive.google.com/file/d/1zg8JvM5-sNKLN9cjsCR5RMaC8I7nAhyN/view?usp=sharing
