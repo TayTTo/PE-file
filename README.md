@@ -38,3 +38,7 @@ the msgbox is undered msgbox dir, also run.bat to compile.
 - Don't know for some reason, when I let the file process hollowing run, it will let the msgbox.exe file sleep right away, it will start run when I restart the process using taskmanager of ProcessHacker.
 ![](./images/pic10.png)
 
+## C2
+Navigate to dir C2, run 2 bat file to compile server and client program, the put the client program into a Vm and try run the server first, then the client. The client for Linux is in the repo C2/clientOnLinux.
+> Result:
+> ![](./images/pic11.png)
